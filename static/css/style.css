@@ -10,3 +10,12 @@
 .slogan {
     color: #777777;
 }
+
+.training-title {
+    text-align: center;
+}
+
+.training-image {
+    display: block;
+    margin: auto;
+}

@@ -11,16 +11,12 @@ def index(title):
 @app.route("/training/<prof>")
 def training(prof):
     if "инженер" in prof or "строитель" in prof:
-        return render_template(
-            "training.html",
-            photopath=url_for("static", "img/it.png"),
-            title="Инженерные тренажеры"
-        )
-    return render_template(
-        "training.html", 
-        photopath=url_for("static", "img/ns.png"),
+        title="Инженерные тренажеры"
+        image_path = url_for("static", filename="img/engineer.jpg")
+    else:
         title="Научные симуляторы"
-    )
+        image_path = url_for("static", filename="img/science.jpg")
+    return render_template("training.html", title=title, image_path=image_path)
 
 
 if __name__ == '__main__':
