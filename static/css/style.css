@@ -38,3 +38,12 @@
 .login-form-title img {
     margin-right: 15px;
 }
+
+.distribution-container {
+    margin: auto;
+    width: 50vw;
+}
+
+.distribution-title {
+    text-align: center;
+}

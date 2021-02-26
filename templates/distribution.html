@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Аварийный доступ{% endblock %}
+
+{% block content %}
+<div class="distribution-container">
+    <h1 class="distribution-title">Размещение по каютам</h1>
+    {% for person in persons %}
+        <h5>{{ person }} - Каюта {{ loop.index}}{{ " - Капитан корабля" if loop.first else ""}}</h5>
+    {% endfor %}
+</div>
+{% endblock %}

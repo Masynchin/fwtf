@@ -66,5 +66,13 @@ def login():
     return render_template("login.html", title="Авторизация", form=form)
 
 
+@app.route("/distribution")
+def distribution():
+    return render_template("distribution.html", persons=[
+        "Улов Налимов", "Рекорд Надоев", "Рулон Обоев", "Учёт Расходов",
+        "Облом Пиндосов", "Камаз Отходов", "Парад Уродов",
+    ])
+
+
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
