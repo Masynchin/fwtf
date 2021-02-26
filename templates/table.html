@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Аварийный доступ{% endblock %}
+
+{% block content %}
+<div class="table-container">
+    <h2 class="table-title">Оформление каюты</h2>
+    <table class="table table-bordered border-primary">
+        <thead>
+            <tr>
+                <th scope="col">Цвет стены</th>
+                <th scope="col">Эмблема</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="background-color: {{ color }}" class="color"></td>
+                <td><img src="{{ filename }}" class="image"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

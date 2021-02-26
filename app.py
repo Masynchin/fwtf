@@ -74,5 +74,16 @@ def distribution():
     ])
 
 
+@app.route("/table/<sex>/<int:age>")
+def table(sex, age):
+    filename = "img/adult.png" if age >= 21 else "img/baby.png"
+    if sex == "male":
+        color = "#00f" if age >= 21 else "#88f"
+    elif sex == "female":
+        color = "#f00" if age >= 21 else "#f88"
+    return render_template("table.html", color=color,
+        filename=url_for("static", filename=filename))
+
+
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
