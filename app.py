@@ -1,6 +1,12 @@
-from flask import Flask, url_for, request, render_template
+import secrets
+
+from flask import Flask, url_for, request, render_template, redirect
+
+from forms import LoginForm
+
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] = secrets.token_urlsafe(16)
 
 
 @app.route("/index/<title>")
@@ -50,6 +56,14 @@ def auto_answer():
         "Мотивация": "Всегда мечтал застрять на Марсе!",
         "Готовы остаться на Марсе?": True,
     })
+
+
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        return redirect("/index/starter")
+    return render_template("login.html", title="Авторизация", form=form)
 
 
 if __name__ == '__main__':

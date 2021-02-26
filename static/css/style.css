@@ -30,3 +30,11 @@
     padding: 20px;
 }
 
+.login-form-container {
+    margin: auto;
+    width: 50vw;
+}
+
+.login-form-title img {
+    margin-right: 15px;
+}
