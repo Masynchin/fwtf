@@ -9,6 +9,8 @@
 
 .slogan {
     color: #777777;
+    padding: 20px;
+    font-weight: 600;
 }
 
 .training-title {
@@ -23,3 +25,8 @@
 .error-title {
     text-align: center;
 }
+
+.answer-container {
+    padding: 20px;
+}
+

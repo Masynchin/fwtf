@@ -38,5 +38,19 @@ def list_prof(list_type):
         return render_template("error.html", desc="Incorrect list_type param")
 
 
+@app.route("/answer")
+@app.route("/auto_answer")
+def auto_answer():
+    return render_template("auto_answer.html", fields={
+        "Фамилия": "Watny",
+        "Имя": "Mark",
+        "Образование": "наивысшее",
+        "Профессия": "штурман марсохода",
+        "Пол": "male",
+        "Мотивация": "Всегда мечтал застрять на Марсе!",
+        "Готовы остаться на Марсе?": True,
+    })
+
+
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
