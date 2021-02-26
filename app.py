@@ -19,5 +19,24 @@ def training(prof):
     return render_template("training.html", title=title, image_path=image_path)
 
 
+@app.route("/list_prof/<list_type>")
+def list_prof(list_type):
+    if list_type in ("ol", "ul"):
+        return render_template("list_prof.html", list_type=list_type,
+            proffs=[
+                "инженер-исследователь",
+                "пилот",
+                "строитель",
+                "экзобиолог",
+                "врач",
+                "инженер по терраформированию",
+                "климатолог",
+                "специалист по радиационной защите",
+                "астролог",
+        ])
+    else:
+        return render_template("error.html", desc="Incorrect list_type param")
+
+
 if __name__ == '__main__':
     app.run(port=5000, debug=True)

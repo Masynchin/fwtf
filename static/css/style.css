@@ -19,3 +19,7 @@
     display: block;
     margin: auto;
 }
+
+.error-title {
+    text-align: center;
+}
