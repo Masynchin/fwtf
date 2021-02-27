@@ -70,3 +70,17 @@
     width: auto; 
     max-width: 25vw; 
 }
+
+.galery-container {
+    margin: auto;
+    width: 50vw;
+}
+
+.galery-title {
+    text-align: center;
+}
+
+.carousel {
+    width: 600px !important;
+    margin: auto;
+}

@@ -1,8 +1,10 @@
 import secrets
+from pathlib import Path
+from random import randrange
 
 from flask import Flask, url_for, request, render_template, redirect
 
-from forms import LoginForm
+from forms import LoginForm, ImageForm
 
 
 app = Flask(__name__)
@@ -83,6 +85,23 @@ def table(sex, age):
         color = "#f00" if age >= 21 else "#f88"
     return render_template("table.html", color=color,
         filename=url_for("static", filename=filename))
+
+
+@app.route("/galery", methods=["GET", "POST"])
+def galery():
+    form = ImageForm()
+    if form.validate_on_submit():
+        image = form.image.data
+        image.save(Path(f"static/img/carousel/{image.filename}"))
+        return redirect("/galery")
+
+    images = [url_for("static", filename=f"img/carousel/{name}")
+        for name in _get_images()]
+    return render_template("galery.html", images=images, form=form)
+
+
+def _get_images():
+    return [image.name for image in Path("static/img/carousel").iterdir()]
 
 
 if __name__ == '__main__':
