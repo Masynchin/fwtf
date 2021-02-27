@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Красная планета{% endblock %}
+
+{% block content %}
+{% set member = member|random %}
+<div class="member-container">
+    <h1>{{ member["name"] }} {{ member["surname"] }}</h1>
+    <img src="{{ url_for('static', filename='img/' + member['filename']) }}">
+    <h4>{{ member["positions"] | sort | join(", ") }}</h4>
+</div>    
+{% endblock %}

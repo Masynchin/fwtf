@@ -84,3 +84,9 @@
     width: 600px !important;
     margin: auto;
 }
+
+.member-container {
+    margin: auto;
+    width: 50vw;
+    text-align: center;
+}

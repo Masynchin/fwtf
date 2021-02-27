@@ -1,3 +1,4 @@
+import json
 import secrets
 from pathlib import Path
 from random import randrange
@@ -102,6 +103,13 @@ def galery():
 
 def _get_images():
     return [image.name for image in Path("static/img/carousel").iterdir()]
+
+
+@app.route("/member")
+def member():
+    with open("templates/member.json", encoding="u8") as f:
+        member = json.load(f)
+    return render_template("member.html", member=member)
 
 
 if __name__ == '__main__':
