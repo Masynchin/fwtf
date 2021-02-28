@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Аварийный доступ{% endblock %}
+
+{% block content %}
+<div class="works-container">
+    <h1 class="works-title">Works log</h1>
+    {% for job in jobs %}
+        <div>
+            <h2>Action #{{ job.id }}</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Title of activity</th>
+                        <th scope="col">Team leader</th>
+                        <th scope="col">Duration</th>
+                        <th scope="col">List of collaborators</th>
+                        <th scope="col">Is finished</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ job.job }}</td>
+                        <td>{{ job.worker }}</td>
+                        <td>{{ job.work_size }} hours</td>
+                        <td>{{ job.collaborators }}</td>
+                        <td style="background-color: #{{ 'bfb' if job.is_finished else 'fbb' }}">{{ "Is finished" * job.is_finished or "Isn't finished" }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,15 +1,11 @@
 import json
-import secrets
 from pathlib import Path
-from random import randrange
 
-from flask import Flask, url_for, request, render_template, redirect
+from flask import url_for, render_template, redirect
 
-from forms import LoginForm, ImageForm
-
-
-app = Flask(__name__)
-app.config["SECRET_KEY"] = secrets.token_urlsafe(16)
+from app import app
+from app.forms import LoginForm, ImageForm
+from app.models import User, Jobs
 
 
 @app.route("/index/<title>")
@@ -102,15 +98,17 @@ def galery():
 
 
 def _get_images():
-    return [image.name for image in Path("static/img/carousel").iterdir()]
+    return [image.name for image in Path("app/static/img/carousel").iterdir()]
 
 
 @app.route("/member")
 def member():
-    with open("templates/member.json", encoding="u8") as f:
+    with open("app/templates/member.json", encoding="u8") as f:
         member = json.load(f)
     return render_template("member.html", member=member)
 
 
-if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+@app.route("/")
+def works_log():
+    jobs = Jobs.query.all()
+    return render_template("works_log.html", jobs=jobs)

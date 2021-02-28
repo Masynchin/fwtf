@@ -90,3 +90,12 @@
     width: 50vw;
     text-align: center;
 }
+
+.works-container {
+    margin: auto;
+    width: 50vw;
+}
+
+.works-title {
+    text-align: center;
+}
