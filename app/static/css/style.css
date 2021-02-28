@@ -99,3 +99,8 @@
 .works-title {
     text-align: center;
 }
+
+.register-container {
+    margin: auto;
+    width: 50vw;
+}

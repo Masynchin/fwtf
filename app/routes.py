@@ -2,9 +2,10 @@ import json
 from pathlib import Path
 
 from flask import url_for, render_template, redirect
+from werkzeug.security import generate_password_hash
 
-from app import app
-from app.forms import LoginForm, ImageForm
+from app import app, db
+from app.forms import LoginForm, ImageForm, RegisterForm
 from app.models import User, Jobs
 
 
@@ -112,3 +113,28 @@ def member():
 def works_log():
     jobs = Jobs.query.all()
     return render_template("works_log.html", jobs=jobs)
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        password = generate_password_hash(form.password.data)
+        surname = form.surname.data
+        name = form.name.data
+        age = form.age.data
+        address = form.address.data
+        position = form.position.data
+        speciality = form.speciality.data
+
+        user = User(
+            email=email, hashed_password=password, surname=surname, name=name,
+            age=age, position=position, speciality=speciality
+        )
+        db.session.add(user)
+        db.session.commit()
+
+        return redirect("/index/starter")
+
+    return render_template("register.html", form=form)
