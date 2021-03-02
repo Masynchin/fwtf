@@ -1,7 +1,8 @@
 import json
 from pathlib import Path
 
-from flask import url_for, render_template, redirect
+from flask import url_for, render_template, redirect, flash
+from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash
 
 from app import app, db
@@ -56,14 +57,6 @@ def auto_answer():
         "Мотивация": "Всегда мечтал застрять на Марсе!",
         "Готовы остаться на Марсе?": True,
     })
-
-
-@app.route('/login', methods=["GET", "POST"])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        return redirect("/index/starter")
-    return render_template("login.html", title="Авторизация", form=form)
 
 
 @app.route("/distribution")
@@ -128,13 +121,40 @@ def register():
         position = form.position.data
         speciality = form.speciality.data
 
+        user = User.get_by_email(email)
+        if user is not None:
+            flash("Email is already taken")
+            return render_template("register.html", form=form)
+
         user = User(
             email=email, hashed_password=password, surname=surname, name=name,
             age=age, position=position, speciality=speciality
         )
         db.session.add(user)
         db.session.commit()
+        login_user(user, remember=True)
 
-        return redirect("/index/starter")
+        return redirect("/")
 
     return render_template("register.html", form=form)
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.get_by_email(form.email.data)
+        if user and user.check_password(form.password.data):
+            login_user(user, remember=form.remember_me.data)
+            return redirect("/")
+        return render_template("login.html",
+            message="Неправильный логин или пароль", form=form)
+
+    return render_template("login.html", title="Авторизация", form=form)
+
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect("/")
