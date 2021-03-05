@@ -6,8 +6,8 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash
 
 from app import app, db
-from app.forms import LoginForm, ImageForm, RegisterForm
-from app.models import User, Jobs
+from app.forms import *
+from app.models import *
 
 
 @app.route("/index/<title>")
@@ -158,3 +158,30 @@ def login():
 def logout():
     logout_user()
     return redirect("/")
+
+
+@app.route("/addjob", methods=["GET", "POST"])
+def addjob():
+    form = JobForm()
+    if form.validate_on_submit():
+        team_leader = form.team_leader.data
+        collaborators = form.collaborators.data
+        for worker_id in [team_leader, *map(int, collaborators.split(","))]:
+            worker = User.query.get(worker_id)
+            if worker is None:
+                flash("Incorrect team_leader or collaborator ID")
+                return render_template("addjob.html", form=form)
+
+        job = Jobs(
+            team_leader=team_leader,
+            job=form.job.data,
+            work_size=form.work_size.data,
+            collaborators=collaborators,
+            is_finished=form.is_finished.data
+        )
+        db.session.add(job)
+        db.session.commit()
+
+        return redirect("/")
+
+    return render_template("addjob.html", form=form)

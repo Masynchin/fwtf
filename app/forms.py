@@ -27,3 +27,12 @@ class RegisterForm(FlaskForm):
     speciality = StringField("Speciality", validators=[DataRequired()])
     address = StringField("Address", validators=[DataRequired()])
     submit = SubmitField("Доступ")
+
+
+class JobForm(FlaskForm):
+    job           = StringField("Job Title", validators=[DataRequired()])
+    team_leader   = IntegerField("Team Leader ID", validators=[DataRequired()])
+    work_size     = IntegerField("Work Size", validators=[DataRequired()])
+    collaborators = StringField("Collaborators", validators=[DataRequired()])
+    is_finished   = BooleanField("Is job finished?")
+    submit        = SubmitField("Submit")
