@@ -160,6 +160,7 @@ def logout():
     return redirect("/")
 
 
+@login_required
 @app.route("/addjob", methods=["GET", "POST"])
 def addjob():
     form = JobForm()
@@ -185,3 +186,56 @@ def addjob():
         return redirect("/")
 
     return render_template("addjob.html", form=form)
+
+
+@app.route("/editjob/<int:job_id>", methods=["GET", "POST"])
+def editjob(job_id):
+    job = Jobs.query.get(job_id)
+    form = JobForm()
+    if form.validate_on_submit():
+        if (
+            current_user.is_authenticated and
+            current_user.id in (job.team_lead.id, 1)
+            and job is not None
+        ):
+            team_leader = form.team_leader.data
+            collaborators = form.collaborators.data
+            for worker_id in [team_leader, *map(int, collaborators.split(","))]:
+                worker = User.query.get(worker_id)
+                if worker is None:
+                    flash("Incorrect team_leader or collaborator ID")
+                    return render_template("editjob.html", form=form)
+
+            job.team_leader = team_leader
+            job.job = form.job.data
+            job.work_size = form.work_size.data
+            job.collaborators = collaborators
+            job.is_finished = form.is_finished.data
+            db.session.commit()
+            return redirect("/")
+        else:
+            flash("Not enough rights for that action")
+            return redirect("/")
+
+    if (
+        current_user.is_authenticated and
+        current_user.id in (job.team_lead.id, 1)
+        and job is not None
+    ):
+        return render_template("addjob.html", form=form)
+    else:
+        flash("Not enough rights for that action")
+        return redirect("/")
+
+
+@app.route("/deljob/<int:job_id>")
+def deljob(job_id):
+    job = Jobs.query.get(job_id)
+    if (
+        current_user.is_authenticated and
+        current_user.id in (job.team_lead.id, 1)
+    ):
+        db.session.delete(job)
+        db.session.commit()
+        flash("Succecsfully delete")
+    return redirect("/")

@@ -21,13 +21,17 @@
                 <tbody>
                     <tr>
                         <td>{{ job.job }}</td>
-                        <td>{{ job.worker }}</td>
+                        <td>{{ job.team_lead }}</td>
                         <td>{{ job.work_size }} hours</td>
                         <td>{{ job.collaborators }}</td>
                         <td style="background-color: #{{ 'bfb' if job.is_finished else 'fbb' }}">{{ "Is finished" * job.is_finished or "Isn't finished" }}</td>
                     </tr>
                 </tbody>
             </table>
+            {% if current_user.is_authenticated and (current_user.id == job.team_lead.id or current_user.id) == 1 %}
+                <a type="button" class="btn btn-warning" href="{{ url_for('editjob', job_id=job.id) }}">Edit Job</a>
+                <a type="button" class="btn btn-danger" href="{{ url_for('deljob', job_id=job.id) }}">Delete Job</a>
+            {% endif %}
         </div>
     {% endfor %}
 </div>

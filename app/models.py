@@ -19,7 +19,7 @@ class User(UserMixin, db.Model):
     email           = db.Column(db.String, unique=True)
     hashed_password = db.Column(db.String)
     modified_date   = db.Column(db.DateTime, default=dt.datetime.utcnow)
-    jobs            = db.relationship("Jobs", backref="worker", lazy="dynamic")
+    jobs            = db.relationship("Jobs", backref="team_lead", lazy="dynamic")
 
     def __repr__(self):
         return f"{self.name} {self.surname}"
