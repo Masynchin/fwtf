@@ -13,99 +13,15 @@
     font-weight: 600;
 }
 
-.training-title {
-    text-align: center;
-}
-
-.training-image {
-    display: block;
-    margin: auto;
-}
-
-.error-title {
-    text-align: center;
-}
-
-.answer-container {
-    padding: 20px;
-}
-
-.login-form-container {
-    margin: auto;
-    width: 50vw;
-}
-
-.login-form-title img {
-    margin-right: 15px;
-}
-
-.distribution-container {
-    margin: auto;
-    width: 50vw;
-}
-
-.distribution-title {
-    text-align: center;
-}
-
-.table-container {
-    margin: auto;
-    width: 50vw;
-}
-
-.table-title {
-    text-align: center;
-}
-
 .table {
     max-width: 50vw;
 }
 
-.color {
-    width: 25vw;
-}
-
-.image {
-    height: auto; 
-    width: auto; 
-    max-width: 25vw; 
-}
-
-.galery-container {
-    margin: auto;
-    width: 50vw;
-}
-
-.galery-title {
-    text-align: center;
-}
-
-.carousel {
-    width: 600px !important;
-    margin: auto;
-}
-
-.member-container {
-    margin: auto;
-    width: 50vw;
-    text-align: center;
-}
-
-.works-container {
+.container {
     margin: auto;
     width: 50vw;
 }
 
 .works-title {
     text-align: center;
-}
-
-.register-container {
-    margin: auto;
-    width: 50vw;
-}
-
-.addjob-container, .adddepartment-container {
-    margin: auto;
-    width: 50vw;
 }

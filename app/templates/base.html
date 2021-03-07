@@ -16,7 +16,7 @@
             {% if current_user.is_authenticated %}
                <a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
             {% else %}
-               <p>
+               <p class="nav-item">
                   <a class="btn btn-primary " href="/register">Зарегистрироваться</a>
                   <a class="btn btn-success" href="/login">Войти</a>
                </p>
@@ -24,15 +24,17 @@
          </div>
       </nav>
       <h4 class="slogan">И на Марсе будут яблони цвести!</h4>
-      {% with messages = get_flashed_messages(with_categories=true) %}
-         {% if messages %}
-            {% for category, message in messages %}
-               <div class="alert alert-{{ category }} flash-alert">
-                  {{ message }}
-               </div>
-            {% endfor %}
-         {% endif %}
-      {% endwith %}
-      {% block content %}{% endblock %}
+      <div class="container">
+         {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+               {% for category, message in messages %}
+                  <div class="alert alert-{{ category }} flash-alert">
+                     {{ message }}
+                  </div>
+               {% endfor %}
+            {% endif %}
+         {% endwith %}
+         {% block content %}{% endblock %}
+      </dif>
    </body>
 </html>
