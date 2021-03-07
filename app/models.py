@@ -52,6 +52,14 @@ class Jobs(db.Model):
     start_date    = db.Column(db.DateTime)
     end_date      = db.Column(db.DateTime)
     is_finished   = db.Column(db.Boolean)
+    category_id   = db.Column(db.Integer, db.ForeignKey("job_category.id"))
+
+
+class JobCategory(db.Model):
+    __tablename__ = "job_category"
+
+    id   = db.Column(db.Integer, primary_key=True)
+    jobs = db.relationship("Jobs", backref="category")
 
 
 class Department(db.Model):

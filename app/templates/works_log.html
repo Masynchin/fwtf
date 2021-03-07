@@ -18,6 +18,7 @@
                     <th scope="col">Team leader</th>
                     <th scope="col">Duration</th>
                     <th scope="col">List of collaborators</th>
+                    <th scope="col">Hazard Category</th>
                     <th scope="col">Is finished</th>
                 </tr>
             </thead>
@@ -27,6 +28,7 @@
                     <td>{{ job.team_lead }}</td>
                     <td>{{ job.work_size }} hours</td>
                     <td>{{ job.collaborators }}</td>
+                    <td>{{ job.category_id }}</td>
                     <td style="background-color: #{{ 'bfb' if job.is_finished else 'fbb' }}">{{ "Is finished" * job.is_finished or "Isn't finished" }}</td>
                 </tr>
             </tbody>

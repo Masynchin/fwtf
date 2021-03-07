@@ -77,6 +77,7 @@ def addjob():
             team_leader=team_leader,
             work_size=form.work_size.data,
             collaborators=form.collaborators.data,
+            category_id=form.category_id.data,
             is_finished=form.is_finished.data,
         )
 
@@ -104,6 +105,7 @@ def editjob(job_id):
             job.job = form.job.data
             job.work_size = form.work_size.data
             job.collaborators = form.collaborators.data
+            job.category_id = form.category_id.data
             job.is_finished = form.is_finished.data
 
             db.session.commit()
