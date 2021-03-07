@@ -204,7 +204,7 @@ def editjob(job_id):
                 worker = User.query.get(worker_id)
                 if worker is None:
                     flash("Incorrect team_leader or collaborator ID")
-                    return render_template("editjob.html", form=form)
+                    return render_template("addjob.html", form=form)
 
             job.team_leader = team_leader
             job.job = form.job.data
@@ -239,3 +239,86 @@ def deljob(job_id):
         db.session.commit()
         flash("Succecsfully delete")
     return redirect("/")
+
+
+@app.route("/departments")
+def departments():
+    departments = Department.query.all()
+    return render_template("departments.html", departments=departments)
+
+
+@app.route("/add_department", methods=["GET", "POST"])
+def add_department():
+    form = DepartmentForm()
+    if form.validate_on_submit() and current_user.is_authenticated:
+        chief = form.chief.data
+        members = form.members.data
+        for member_id in [chief, *map(int, members.split(","))]:
+            member = User.query.get(member_id)
+            if member is None:
+                flash("Incorrect team_leader or collaborator ID")
+                return render_template("adddepartment.html", form=form)
+
+        department = Department(title=form.title.data,
+            chief=chief, members=members, email=form.email.data)
+        db.session.add(department)
+        db.session.commit()
+        return redirect("/")
+
+    elif not current_user.is_authenticated:
+        flash("Not enough rights for that action")
+        return redirect("/")
+
+    return render_template("adddepartment.html", form=form)
+
+
+@app.route("/edit_department/<int:department_id>", methods=["GET", "POST"])
+def edit_department(department_id):
+    department = Department.query.get(department_id)
+    form = DepartmentForm()
+    if form.validate_on_submit():
+        if (
+            current_user.is_authenticated and
+            current_user.id in (department.chief, 1)
+            and department is not None
+        ):
+            chief = form.chief.data
+            members = form.members.data
+            for member_id in [chief, *map(int, members.split(","))]:
+                member = User.query.get(member_id)
+                if member is None:
+                    flash("Incorrect team_leader or collaborator ID")
+                    return render_template("adddepartment.html", form=form)
+
+            department.title = form.title.data
+            department.chief = chief
+            department.members = members
+            department.email = form.email.data
+            db.session.commit()
+            return redirect("/")
+        else:
+            flash("Not enough rights for that action")
+            return redirect("/")
+
+    if (
+        current_user.is_authenticated and
+        current_user.id in (department.chief, 1)
+        and department is not None
+    ):
+        return render_template("adddepartment.html", form=form)
+    else:
+        flash("Not enough rights for that action")
+        return redirect("/")
+
+
+@app.route("/del_department/<int:department_id>", methods=["GET", "POST"])
+def del_department(department_id):
+    department = Department.query.get(department_id)
+    if (
+        current_user.is_authenticated and
+        current_user.id in (department.chief, 1)
+    ):
+        db.session.delete(department)
+        db.session.commit()
+        flash("Succecsfully delete")
+    return redirect("/departments")

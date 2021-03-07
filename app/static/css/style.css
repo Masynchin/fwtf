@@ -105,7 +105,7 @@
     width: 50vw;
 }
 
-.addjob-container {
+.addjob-container, .adddepartment-container {
     margin: auto;
     width: 50vw;
 }
