@@ -1,5 +1,8 @@
+import traceback
+
 from flask import url_for, render_template, redirect, flash
 from flask_login import current_user, login_user, logout_user, login_required
+import requests
 
 from app import app, db
 from app.forms import *
@@ -25,9 +28,14 @@ def register():
             return render_template("register.html", form=form)
 
         user = User(
-            email=email, surname=form.surname.data, name=form.name.data,
-            age=form.age.data, address=form.address.data,
-            position=form.position.data, speciality=form.speciality.data,
+            email=email,
+            surname=form.surname.data,
+            name=form.name.data,
+            age=form.age.data,
+            address=form.address.data,
+            position=form.position.data,
+            speciality=form.speciality.data,
+            city_from=form.city_from.data
         )
         user.set_password(form.password.data)
 
@@ -208,3 +216,24 @@ def del_department(department_id):
         db.session.commit()
         flash("Succecsfully delete")
     return redirect("/departments")
+
+
+@app.route("/users_show/<int:user_id>")
+def users_show(user_id):
+    resp = requests.get(f"http://localhost:5000/api/users/{user_id}").json()
+    if "error" in resp:
+        flash("Something went wrong")
+        return redirect("/")
+
+    try:
+        user = resp["users"]
+        city = user["city_from"]
+        image = get_city_image(city)
+    except:
+        traceback.print_exc()
+        flash("Something went wrong")
+        return redirect("/")
+    else:
+        with open(f"app/static/cities/{city}.png", mode="wb") as f:
+            f.write(image)
+        return render_template("map.html", user=user, city=city)

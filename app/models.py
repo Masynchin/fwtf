@@ -18,6 +18,7 @@ class User(UserMixin, db.Model, SerializerMixin):
     speciality      = db.Column(db.String)
     address         = db.Column(db.String)
     email           = db.Column(db.String, unique=True)
+    city_from       = db.Column(db.String)
     hashed_password = db.Column(db.String)
     modified_date   = db.Column(db.DateTime, default=dt.datetime.utcnow)
     jobs            = db.relationship("Jobs", backref="team_lead")

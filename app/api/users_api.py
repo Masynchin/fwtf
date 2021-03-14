@@ -9,7 +9,7 @@ blueprint = Blueprint("users_api", __name__, template_folder="templates")
 
 USER_KEYS_GET = {
     "id", "surname", "name", "age", "position",
-    "speciality", "address", "email",
+    "speciality", "address", "email", "city_from",
 }
 USER_KEYS_POST = USER_KEYS_GET | {"password"}
 USER_KEYS_PUT = USER_KEYS_POST - {"id"}
@@ -48,6 +48,7 @@ def post_users():
         speciality=user_json["speciality"],
         address=user_json["address"],
         email=user_json["email"],
+        city_from=user_json["city_from"],
     )
     user.set_password(user_json["password"])
 
@@ -84,6 +85,7 @@ def edit_users(user_id):
     user.speciality = user_json["speciality"]
     user.address = user_json["address"]
     user.email = user_json["email"]
+    user.city_from = user_json["city_from"]
     user.set_password(user_json["password"])
 
     db.session.commit()

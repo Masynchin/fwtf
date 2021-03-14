@@ -21,6 +21,7 @@ def test_correct():
         "address": "",
         "email": "",
         "password": "",
+        "city_from": "",
     }).json()
 
     res = requests.delete(f"{URL}/0").json()

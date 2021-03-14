@@ -40,6 +40,7 @@ def test_incorrect_id_already_exists():
             "address": "",
             "email": "",
             "password": "",
+            "city_from": "",
         }).json()
         assert res == {"error": "Id already exists"}
 
@@ -58,6 +59,7 @@ def test_incorrect_email_already_exists():
             "address": "",
             "email": email,
             "password": "",
+            "city_from": "",
         }).json()
         assert res == {"error": "This email is already used"}
 
@@ -75,6 +77,7 @@ def test_correct():
         "address": "",
         "email": "",
         "password": "",
+        "city_from": "",
     }).json()
     assert res == {"success": "OK"}
 
@@ -96,6 +99,7 @@ def delete_and_post_zero_user():
         "address": "",
         "email": "",
         "password": "",
+        "city_from": "",
     })
 
 

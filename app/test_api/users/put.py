@@ -60,6 +60,7 @@ def delete_and_post_zero_user():
         "address": "",
         "email": "",
         "password": "",
+        "city_from": "",
     })
 
 
