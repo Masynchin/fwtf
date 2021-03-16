@@ -7,3 +7,4 @@ Flask-WTF
 SQLAlchemy-serializer
 pytest
 requests
+Flask-RESTful
