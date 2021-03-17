@@ -25,7 +25,6 @@ def test_incorrect_not_all():
 
 
 def test_correct():
-    assert len(requests.get(URL).json()["users"]) == 3
     res = requests.post(URL, data=dict(
         surname="",
         name="",

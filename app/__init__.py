@@ -31,10 +31,14 @@ login = LoginManager(app)
 from app.rest_api import (
     UserResource,
     UserListResource,
+    JobsResource,
+	JobsListResource,
 )
 
 api = Api(app)
 api.add_resource(UserResource, "/api/v2/users/<int:user_id>")
 api.add_resource(UserListResource, "/api/v2/users")
+api.add_resource(JobsResource, "/api/v2/jobs/<int:job_id>")
+api.add_resource(JobsListResource, "/api/v2/jobs")
 
 from app import routes, models, errors
